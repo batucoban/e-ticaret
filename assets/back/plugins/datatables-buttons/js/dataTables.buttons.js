@@ -2282,7 +2282,7 @@ var _filename = function ( config )
 /**
  * Simply utility method to allow parameters to be given as a function
  *
- * @param {undefined|string|function} option Option
+ * @param {undefined|string|function} option Options
  * @return {null|string} Resolved value
  */
 var _stringOrFunction = function ( option )

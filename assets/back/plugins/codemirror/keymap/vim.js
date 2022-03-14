@@ -512,7 +512,7 @@
     }
 
     defineOption('filetype', undefined, 'string', ['ft'], function(name, cm) {
-      // Option is local. Do nothing for global.
+      // Options is local. Do nothing for global.
       if (cm === undefined) {
         return;
       }

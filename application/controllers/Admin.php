@@ -125,4 +125,114 @@ class Admin extends CI_Controller {
         Categories::delete($id);
         back();
     }
+
+    public function product_options(){
+        $data['head'] = 'Product Options';
+        $data['options'] = Options::select();
+        $this->load->view('admin/options/options', $data);
+    }
+
+    public function add_product_option(){
+        if (isPost()){
+            $data = array(
+                'name' => postvalue('option'),
+                'slug' => sef(postvalue('option'))
+            );
+            Options::insert($data);
+            flash('success', 'check', 'Ürün seçeneği eklendi.');
+            back();
+        }
+        $data['head'] = 'Add Product Option';
+        $this->load->view('admin/options/add_product_option', $data);
+    }
+
+    public function edit_product_option($id){
+        if (isPost()){
+            $data = array(
+                'name' => postvalue('option'),
+                'slug' => sef(postvalue('option'))
+            );
+            Options::update($id, $data);
+            flash('success', 'check', 'Ürün seçeneği güncellendi.');
+            back();
+        }
+
+        $data['head'] = 'Edit Product Option';
+        $isExist = Options::find($id);
+        if ($isExist){
+            $data['option'] = $isExist;
+            $this->load->view('admin/options/edit_product_option', $data);
+        }
+        else{
+            back();
+        }
+    }
+
+    public function delete_product_option($id){
+        Options::delete($id);
+        back();
+    }
+
+    public function sub_options($id){
+        $option = Options::find($id);
+        $data['option'] = $option;
+        $data['head'] = 'Sub Options for '.$option->name;
+        $data['suboptions'] = SubOptions::select(['option_id' => $id]);
+        $this->load->view('admin/options/sub_options', $data);
+    }
+
+    public function add_sub_option($id){
+        if (isPost()){
+            $sub_option = postvalue('sub_option');
+            $sc = "-";
+            if (strpos($sub_option, $sc)){
+                $value = explode('-', $sub_option);
+                foreach ($value as $name){
+                    SubOptions::insert([
+                        'option_id' => $id,
+                        'name' => $name
+                    ]);
+                }
+                flash('success', 'check', 'Alt seçenekler eklendi.');
+                redirect('admin/sub_options/'.$id);
+            }
+            else{
+                SubOptions::insert([
+                    'option_id' => $id,
+                    'name' => $sub_option
+                ]);
+                flash('success', 'check', 'Alt seçenek eklendi.');
+                redirect('admin/sub_options/'.$id);
+            }
+        }
+        $data['head'] = "Add Sub Option";
+        $this->load->view('admin/options/add_sub_option',$data);
+    }
+
+    public function edit_sub_option($id){
+        if (isPost()){
+            $data = array(
+                'name' => postvalue('option')
+
+            );
+            SubOptions::update($id, $data);
+            flash('success', 'check', 'Ürün alt seçeneği güncellendi.');
+            back();
+        }
+
+        $data['head'] = 'Edit Sub Option';
+        $isExist = SubOptions::find($id);
+        if ($isExist){
+            $data['option'] = $isExist;
+            $this->load->view('admin/options/edit_sub_option', $data);
+        }
+        else{
+            back();
+        }
+    }
+
+    public function delete_sub_option($id){
+        SubOptions::delete($id);
+        back();
+    }
 }

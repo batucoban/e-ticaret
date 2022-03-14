@@ -10093,7 +10093,7 @@
 		 *  @type array
 		 *  @default null
 		 *
-		 *  @dtopt Option
+		 *  @dtopt Options
 		 *  @name DataTable.defaults.data
 		 *
 		 *  @example
@@ -10156,7 +10156,7 @@
 		 *  @type array
 		 *  @default [[0,'asc']]
 		 *
-		 *  @dtopt Option
+		 *  @dtopt Options
 		 *  @name DataTable.defaults.order
 		 *
 		 *  @example
@@ -10187,7 +10187,7 @@
 		 *  @type array
 		 *  @default null
 		 *
-		 *  @dtopt Option
+		 *  @dtopt Options
 		 *  @name DataTable.defaults.orderFixed
 		 *
 		 *  @example
@@ -10274,7 +10274,7 @@
 		 *  @type string|object|function
 		 *  @default null
 		 *
-		 *  @dtopt Option
+		 *  @dtopt Options
 		 *  @name DataTable.defaults.ajax
 		 *  @since 1.10.0
 		 *
@@ -10370,7 +10370,7 @@
 		 *  @type array
 		 *  @default [ 10, 25, 50, 100 ]
 		 *
-		 *  @dtopt Option
+		 *  @dtopt Options
 		 *  @name DataTable.defaults.lengthMenu
 		 *
 		 *  @example
@@ -10428,7 +10428,7 @@
 		 *  @type array
 		 *  @default []
 		 *
-		 *  @dtopt Option
+		 *  @dtopt Options
 		 *  @name DataTable.defaults.searchCols
 		 *
 		 *  @example
@@ -10454,7 +10454,7 @@
 		 *  @default null <i>Will take the values determined by the `oClasses.stripe*`
 		 *    options</i>
 		 *
-		 *  @dtopt Option
+		 *  @dtopt Options
 		 *  @name DataTable.defaults.stripeClasses
 		 *
 		 *  @example

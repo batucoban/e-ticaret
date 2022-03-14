@@ -55,6 +55,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="<?= base_url('admin/product_options') ?>" class="nav-link <?php active('product_options'); ?>">
+                <i class="nav-icon fas fa-sort"></i>
+                <p>Product Options</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="<?= base_url('admin/config') ?>" class="nav-link <?php active('config'); ?>">
                 <i class="nav-icon fas fa-cog"></i>
                 <p>Settings</p>
