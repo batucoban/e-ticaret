@@ -19,8 +19,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-solid">
-                <div class="box-body">
+            <div class="card card-solid">
+                <div class="card-body">
                     <table id="category" class="table table-bordered table-striped">
                         <thead>
                         <tr>

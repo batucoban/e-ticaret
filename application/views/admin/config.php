@@ -5,8 +5,8 @@ $this->load->view('admin/include/sidebar');
 
 <div class="row">
     <div class="col-md-4">
-        <div class="box box-solid">
-            <div class="box-body">
+        <div class="card card-solid">
+            <div class="card-body">
                 <form method="post" action="<?php echo base_url('admin/configpost'); ?>" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Site Name</label>

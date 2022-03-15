@@ -49,6 +49,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="<?= base_url('admin/product') ?>" class="nav-link <?php active('product'); ?>">
+                <i class="nav-icon fas fa-shopping-bag"></i>
+                <p>Products</p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="<?= base_url('admin/categories') ?>" class="nav-link <?php active('categories'); ?>">
                 <i class="nav-icon fas fa-align-justify"></i>
                 <p>Categories</p>
@@ -57,7 +63,7 @@
         <li class="nav-item">
             <a href="<?= base_url('admin/product_options') ?>" class="nav-link <?php active('product_options'); ?>">
                 <i class="nav-icon fas fa-sort"></i>
-                <p>Product Options</p>
+                <p>Options</p>
             </a>
         </li>
         <li class="nav-item">

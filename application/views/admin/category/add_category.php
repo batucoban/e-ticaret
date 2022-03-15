@@ -4,8 +4,8 @@
 
     <div class="row">
         <div class="col-md-4">
-            <div class="box box-solid">
-                <div class="box-body">
+            <div class="card card-solid">
+                <div class="card-body">
                     <form action="<?= base_url('admin/add_category') ?>" method="post">
                         <div class="form-group">
                             <label>Category Name</label>

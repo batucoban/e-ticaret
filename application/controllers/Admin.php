@@ -235,4 +235,15 @@ class Admin extends CI_Controller {
         SubOptions::delete($id);
         back();
     }
+
+    public function product(){
+        $data['head'] = "Product";
+        $this->load->view('admin/product/products', $data);
+    }
+
+    public function add_product(){
+        $data['head'] = "Add Product";
+        $data['sub_category'] = Categories::select();
+        $this->load->view('admin/product/add_product', $data);
+    }
 }

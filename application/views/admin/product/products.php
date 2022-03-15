@@ -4,11 +4,11 @@
 
     <div class="row">
         <div class="col-md-4">
-            <a href="<?= base_url('admin/add_product_option') ?>" class="small-box-footer">
+            <a href="<?= base_url('admin/add_product') ?>" class="small-box-footer">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>Creat Product Options</h3>
-                        <p>Ürün seçeneği oluşturmak için tıklayınız.</p>
+                        <h3>Creat Product</h3>
+                        <p>Ürün oluşturmak için tıklayınız.</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-plus"></i>
@@ -24,20 +24,26 @@
                     <table id="category" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Option</th>
-                            <th>Option Count</th>
+                            <th>Category</th>
+                            <th>Top Category</th>
                             <th>Process</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($options as $option): ?>
+                        <?php foreach ($categories as $category): ?>
                             <tr>
-                                <td><?= $option->name ?></td>
-                                <td><?= SubOptions::count(['option_id' => $option->id]) ?></td>
+                                <td><?= $category->name ?></td>
+
+                                <?php if ($category->top_category == '1'): ?>
+                                    <td>Man</td>
+                                <?php elseif ($category->top_category == '2'): ?>
+                                    <td>Woman</td>
+                                <?php else: ?>
+                                    <td>Kid</td>
+                                <?php endif; ?>
                                 <td>
-                                    <a href="<?= base_url('admin/sub_options/').$option->id ?>" class="btn btn-xs btn-success"><i class="fa fa-sort-down"></i> Sub Options</a>
-                                    <a href="<?= base_url('admin/edit_product_option/').$option->id ?>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> Edit</a>
-                                    <a href="<?= base_url('admin/delete_product_option/').$option->id ?>" class="btn btn-xs btn-danger" style="margin-left: 5px;"><i class="fa fa-trash"></i> Delete</a>
+                                    <a href="<?= base_url('admin/edit_category/').$category->id ?>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> Edit</a>
+                                    <a href="<?= base_url('admin/delete_category/').$category->id ?>" class="btn btn-xs btn-danger" style="margin-left: 5px;"><i class="fa fa-trash"></i> Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
