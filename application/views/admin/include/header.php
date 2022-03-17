@@ -26,6 +26,10 @@
     <!-- summernote -->
     <link rel="stylesheet" href="<?php echo base_url('assets/back/');?>plugins/summernote/summernote-bs4.min.css">
     <link rel="stylesheet" href="<?php echo base_url('assets/back/');?>plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

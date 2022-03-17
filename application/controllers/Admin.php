@@ -238,6 +238,7 @@ class Admin extends CI_Controller {
 
     public function product(){
         $data['head'] = "Product";
+        $data['products'] = Products::select();
         $this->load->view('admin/product/products', $data);
     }
 
@@ -245,5 +246,121 @@ class Admin extends CI_Controller {
         $data['head'] = "Add Product";
         $data['sub_category'] = Categories::select();
         $this->load->view('admin/product/add_product', $data);
+    }
+
+    public function add_product_image($id){
+        if (isPost()){
+            $config['upload_path'] = "assets/upload/product/";
+            $config['allowed_types'] = "jpg|png|jpeg";
+            $this->upload->initialize($config);
+            if ($this->upload->do_upload('file')){
+                $image = $this->upload->data();
+                $path = $config['upload_path'].$image['file_name'];
+                $data = [
+                    'product' => $id,
+                    'path' => $path
+                    ];
+                Images::insert($data);
+            }
+        }
+
+        $data['head'] = "Add Product Image";
+        $data['sub_category'] = Categories::select();
+        $this->load->view('admin/product/add_product_image', $data);
+    }
+
+    public function add_product_stock_type($id){
+        if (isPost()){
+            if (postvalue('sub_category') == postvalue('sub_category_2')){
+                flash('warning', 'ban', 'Ürün seçenekleri aynı.');
+                back();
+            }
+            if (StockType::count(['product' => $id]) == 1){
+                flash('warning', 'ban', 'Bu ürün için stok tipi belirlenmiş.');
+                back();
+            }
+            $data = array(
+                'product' => $id,
+                'options' => postvalue('sub_category')
+            );
+            if (postvalue('sub_category_2') != 0){
+                $data['options2'] = postvalue('sub_category_2');
+            }
+            StockType::insert($data);
+            flash('success', 'check', 'Stok başarıyla girildi.');
+            redirect('admin/add_product_stock/'.$id);
+        }
+
+        $data['head'] = "Add Product Stock Type";
+        $data['options'] = Options::select();
+        $this->load->view('admin/product/add_product_stock_type', $data);
+    }
+
+    public function add_product_stock($id){
+        if (isPost()){
+            if (Stocks::find(['product' => $id, 'sub_option' => postvalue('sub_option'), 'sub_option2' => postvalue('sub_option_2')])){
+                flash('warning', 'ban', 'Bu seçenekler için stok bilgisi mevcut');
+                back();
+            }
+            $data = array(
+                'product' => $id,
+                'sub_option' => postvalue('sub_option'),
+                'sub_option2' => postvalue('sub_option_2'),
+                'stock' => postvalue('stock')
+                );
+            Stocks::insert($data);
+            flash('success', 'check', 'Stok başarı ile girildi.');
+            back();
+        }
+        $product = Products::find($id);
+        if (!$product){
+            flash('danger', 'ban', 'Ürün bulunamadı.');
+            back();
+        }
+        $stock_type = StockType::find(['product' => $product->id]);
+        $option_1 = SubOptions::select(['option_id' => $stock_type->options]);
+        $option_2 = null;
+        if ($stock_type->options2 != null){
+            $option_2 = SubOptions::select(['option_id' => $stock_type->options2]);
+        }
+        $data['option_1'] = $option_1;
+        $data['option_2'] = $option_2;
+        $data['type'] = $stock_type;
+        $data['stocks'] = Stocks::select(['product' => $id]);
+        $data['head'] = "Add Product Stock";
+        $this->load->view('admin/product/add_product_stock', $data);
+    }
+
+    public function product_controller($id = null){
+        if (isPost()){
+            if (postvalue('step1')){
+                $data = [
+                    'category' => postvalue('category'),
+                    'sub_category' => postvalue('sub_category'),
+                    'title' => postvalue('title'),
+                    'description' => postvalue('desc'),
+                    'price' => postvalue('price'),
+                    'discount' => postvalue('discount'),
+                    'tag' => postvalue('tag')
+                    ];
+                Products::insert($data);
+
+                $insert_id = $this->db->insert_id();
+                $qr_path = 'assets/upload/qrcode/product'.$insert_id.'.png';
+                $params['data'] = 'urunid = '.$insert_id;
+                $params['level'] = 'H';
+                $params['size'] = 5;
+                $params['savename'] = FCPATH.$qr_path;
+                $this->ciqrcode->generate($params);
+                Products::update($insert_id, ['qrcode' => $qr_path]);
+                redirect('admin/add_product_image/'.$insert_id);
+            }
+        }
+        $product = Products::find($id);
+        if ($product){
+            Products::update($id, ['complete' => 1]);
+            flash('success', 'check', 'Ürün başarı ile eklendi.');
+            redirect('admin/product');
+        }
     }
 }

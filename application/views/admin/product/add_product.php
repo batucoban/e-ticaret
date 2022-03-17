@@ -6,10 +6,10 @@
         <div class="col-md-8">
             <div class="card card-solid">
                 <div class="card-body">
-                    <form action="<?= base_url('admin/add_product') ?>" method="post">
+                    <form action="<?= base_url('admin/product_controller') ?>" method="post">
                         <div class="form-group">
                             <label>Product Name</label>
-                            <input type="text" name="title" class="form-control" required>
+                            <input type="text" name="title" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Product Category</label>
@@ -23,7 +23,7 @@
                             <label>Product Sub Category</label>
                             <select name="sub_category" class="form-control">
                                 <?php foreach ($sub_category as $category): ?>
-                                    <option><?= $category->name ?></option>
+                                    <option value="<?= $category->id ?>"><?= $category->name ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -31,20 +31,24 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Price</label>
-                                    <input type="number" name="price" class="form-control" required>
+                                    <input type="text" name="price" class="form-control">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Discount(İndirim)</label>
-                                    <input type="number" name="discount" class="form-control" required>
+                                    <input type="text" name="discount" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Product Tag</label>
-                            <input type="text" name="tag" class="form-control" required>
+                            <label>Tag</label>
+                            <input type="text" name="tag" class="form-control">
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-block btn-flat btn-success">Add Category</button>
+                            <label>Description</label>
+                            <textarea name="desc" rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-block btn-flat btn-success" value="1" name="step1">Next</button>
                         </div>
                     </form>
                 </div>

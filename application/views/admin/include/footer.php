@@ -26,6 +26,7 @@
 <script>
     $.widget.bridge('uibutton', $.ui.button)
 </script>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="<?php echo base_url('assets/back/');?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
