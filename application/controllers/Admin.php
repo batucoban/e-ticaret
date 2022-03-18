@@ -251,8 +251,10 @@ class Admin extends CI_Controller {
 
     public function add_product_image($id){
         if (isPost()){
+            $product = Products::find($id);
             $config['upload_path'] = "assets/upload/product/";
             $config['allowed_types'] = "jpg|png|jpeg";
+            $config['file_name'] = $product->seo.'-'.$product->id;
             $this->upload->initialize($config);
             if ($this->upload->do_upload('file')){
                 $image = $this->upload->data();
@@ -332,6 +334,35 @@ class Admin extends CI_Controller {
         $this->load->view('admin/product/add_product_stock', $data);
     }
 
+    public function edit_product_stock($id){
+        if (isPost()){
+            $stock = Stocks::find($id);
+            $data = array(
+                'product' => $stock->product,
+                'sub_option' => postvalue('sub_option'),
+                'sub_option2' => postvalue('sub_option_2'),
+                'stock' => postvalue('stock')
+            );
+            Stocks::update($id, $data);
+            flash('success', 'check', 'Stok başarı ile güncellendi.');
+            back();
+        }
+
+        $stock = Stocks::find($id);
+        $stock_type = StockType::find(['product' => $stock->product]);
+        $option_1 = SubOptions::select(['option_id' => $stock_type->options]);
+        $option_2 = null;
+        if ($stock_type->options2 != null){
+            $option_2 = SubOptions::select(['option_id' => $stock_type->options2]);
+        }
+        $data['option_1'] = $option_1;
+        $data['option_2'] = $option_2;
+        $data['type'] = $stock_type;
+        $data['stock'] = $stock;
+        $data['head'] = "Edit Product Stock";
+        $this->load->view('admin/product/edit_product_stock', $data);
+    }
+
     public function product_controller($id = null){
         if (isPost()){
             if (postvalue('step1')){
@@ -390,6 +421,7 @@ class Admin extends CI_Controller {
         $data['product'] = $product;
         $data['images'] = Images::select(['product' => $id]);
         $data['stocks'] = Stocks::select(['product' => $id]);
+        $data['type'] = StockType::find(['product' => $id]);
         $data['sub_category'] = Categories::select();
         $data['head'] = 'Edit Product';
         //codeprint($data,1);
@@ -415,6 +447,55 @@ class Admin extends CI_Controller {
         $data = array('master' => 1);
         Images::update($id, $data);
         flash('success', 'check', 'resim kapağı seçildi.');
+        back();
+    }
+
+    public function delete_function(){
+        if ($this->session->userdata('delete_function')){
+            $this->session->unset_userdata('delete_function');
+        }
+        else{
+            $this->session->set_userdata('delete_function', true);
+        }
+        back();
+    }
+
+    public function delete($table, $id){
+        if ($this->session->userdata('delete_function')){
+            echo "NOOOOOOOOOOOOOOO!!!!!!!!!";
+        }
+
+        switch ($table){
+            case "product":
+                $product = Products::find($id);
+                if ($product){
+                    StockType::delete(['product' => $id]);
+                    Stocks::delete(['product' => $id]);
+                    $images = Images::select(['product' => $id]);
+                    foreach ($images as $image){
+                        unlink($image->path);
+                        Images::delete($image->id);
+                    }
+                    unlink($product->qrcode);
+                    Products::delete($id);
+                }
+                break;
+            case "stock":
+                Stocks::delete($id);
+                break;
+            case "category":
+                Categories::delete($id);
+                break;
+            case "option":
+                $option = Options::find($id);
+                SubOptions::delete(['option_id' => $option->id]);
+                Options::delete($id);
+                break;
+            case "sub_option":
+                SubOptions::delete($id);
+                break;
+        }
+        flash('success', 'check', 'Silme başarıyla gerçekleşti.');
         back();
     }
 }

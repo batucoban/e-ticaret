@@ -59,7 +59,7 @@ function isPost(){
     }
 }
 
-function sef($text) {
+function sef($text){
     $find = array('Ç', 'Ş', 'Ğ', 'Ü', 'İ', 'Ö', 'ç', 'ş', 'ğ', 'ü', 'ö', 'ı', '+', '#');
     $replace = array('c', 's', 'g', 'u', 'i', 'o', 'c', 's', 'g', 'u', 'o', 'i', 'plus', 'sharp');
     $text = strtolower(str_replace($find, $replace, $text));
@@ -68,6 +68,13 @@ function sef($text) {
     $text = str_replace(' ', '-', $text);
 
     return $text;
+}
+
+function delete_button($table, $id){
+    $ci = get_instance();
+    if ($ci->session->userdata('delete_function')){
+        echo '<a href="'.base_url('admin/delete/').$table.'/'.$id.'" class="btn btn-xs btn-danger" style="margin-left: 5px;"><i class="fa fa-trash"></i> Delete</a>';
+    }
 }
 
 ?>

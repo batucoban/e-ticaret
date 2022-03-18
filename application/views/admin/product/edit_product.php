@@ -75,5 +75,48 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Product Stock List</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                        <tr>
+                            <th><?= Options::find($type->options)->name ?></th>
+                            <?php if (!$type->options2 == 0): ?>
+                            <th><?= Options::find($type->options2)->name ?></th>
+                            <?php endif; ?>
+                            <th>Stok Sayısı</th>
+                            <th>İşlemler</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($stocks as $stock): ?>
+                        <tr>
+                            <td><?= SubOptions::find($stock->sub_option)->name ?></td>
+                            <?php if (!$type->options2 == 0): ?>
+                            <td><?= SubOptions::find($stock->sub_option2)->name ?></td>
+                            <?php endif; ?>
+                            <td><?= $stock->stock ?></td>
+                            <td>
+                                <a href="<?= base_url('admin/edit_product_stock/').$stock->id ?>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> Edit</a>
+                                <?php delete_button('stock', $stock->id) ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
 
 <?php $this->load->view('admin/include/footer'); ?>

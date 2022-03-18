@@ -78,6 +78,20 @@
                 <p>Logout</p>
             </a>
         </li>
+        <li class="nav-header">FUNCTIONS</li>
+        <li class="nav-item">
+            <?php if ($this->session->userdata('delete_function')): ?>
+            <a href="<?= base_url('admin/delete_function') ?>" class="nav-link navbar-success">
+                <i class="nav-icon fas fa-check"></i>
+                <p>Delete Function Open</p>
+            </a>
+            <?php else: ?>
+            <a href="<?= base_url('admin/delete_function') ?>" class="nav-link">
+                <i class="nav-icon fas fa-ban"></i>
+                <p>Delete Function Close</p>
+            </a>
+            <?php endif; ?>
+        </li>
     </ul>
 </nav>
 <!-- /.sidebar-menu -->

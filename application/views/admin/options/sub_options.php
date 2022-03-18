@@ -34,7 +34,7 @@
                                 <td><?= $option->name ?></td>
                                 <td>
                                     <a href="<?= base_url('admin/edit_sub_option/').$option->id ?>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> Edit</a>
-                                    <a href="<?= base_url('admin/delete_sub_option/').$option->id ?>" class="btn btn-xs btn-danger" style="margin-left: 5px;"><i class="fa fa-trash"></i> Delete</a>
+                                    <?php delete_button('sub_option', $option->id) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

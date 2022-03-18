@@ -43,7 +43,7 @@
                                 <?php endif; ?>
                                 <td>
                                     <a href="<?= base_url('admin/edit_category/').$category->id ?>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> Edit</a>
-                                    <a href="<?= base_url('admin/delete_category/').$category->id ?>" class="btn btn-xs btn-danger" style="margin-left: 5px;"><i class="fa fa-trash"></i> Delete</a>
+                                    <?php delete_button('category', $category->id) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

@@ -42,7 +42,12 @@
             <div class="card card-primary">
                 <div class="card-body">
                     <?php foreach ($stocks as $stock): ?>
-                    <li><?= Options::find($type->options)->name.' : '.SubOptions::find($stock->sub_option)->name.' - '.Options::find($type->options2)->name.' : '.SubOptions::find($stock->sub_option2)->name.' - Stok Sayısı : '.$stock->stock ?></li>
+                    <li><?= Options::find($type->options)->name.' : '.SubOptions::find($stock->sub_option)->name.' - '?>
+                        <?php if (!$type->options2 == 0): ?>
+                        <?= Options::find($type->options2)->name.' : '.SubOptions::find($stock->sub_option2)->name.' - ' ?>
+                        <?php endif; ?>
+                        <?= ' Stok Sayısı : '.$stock->stock ?>
+                    </li>
                     <?php endforeach; ?>
                 </div>
             </div>

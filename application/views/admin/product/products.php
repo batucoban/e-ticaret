@@ -49,7 +49,7 @@
                                 <td><?= $product->discount ?></td>
                                 <td>
                                     <a href="<?= base_url('admin/edit_product/').$product->id ?>" class="btn btn-xs btn-default"><i class="fa fa-edit"></i> Edit</a>
-                                    <a href="<?= base_url('admin/delete_product/').$product->id ?>" class="btn btn-xs btn-danger" style="margin-left: 5px;"><i class="fa fa-trash"></i> Delete</a>
+                                    <?php delete_button('product', $product->id) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
