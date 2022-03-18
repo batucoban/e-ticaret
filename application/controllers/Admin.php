@@ -238,7 +238,8 @@ class Admin extends CI_Controller {
 
     public function product(){
         $data['head'] = "Product";
-        $data['products'] = Products::select();
+        $data['products'] = Products::query("select * from products order by id DESC ");
+        //codeprint($data,1);
         $this->load->view('admin/product/products', $data);
     }
 
@@ -362,5 +363,58 @@ class Admin extends CI_Controller {
             flash('success', 'check', 'Ürün başarı ile eklendi.');
             redirect('admin/product');
         }
+    }
+
+    public function edit_product($id){
+        if (isPost()){
+            if (postvalue('product')){
+                $data = [
+                    'category' => postvalue('category'),
+                    'sub_category' => postvalue('sub_category'),
+                    'title' => postvalue('title'),
+                    'description' => postvalue('desc'),
+                    'price' => postvalue('price'),
+                    'discount' => postvalue('discount'),
+                    'tag' => postvalue('tag')
+                ];
+                Products::update($id, $data);
+                flash('success', 'check', 'Ürün bilgileri güncellendi.');
+            }
+        }
+
+        $product = Products::find($id);
+        if (!$product){
+            flash('warning', 'ban', 'Böyle bir ürün yok.');
+            back();
+        }
+        $data['product'] = $product;
+        $data['images'] = Images::select(['product' => $id]);
+        $data['stocks'] = Stocks::select(['product' => $id]);
+        $data['sub_category'] = Categories::select();
+        $data['head'] = 'Edit Product';
+        //codeprint($data,1);
+        $this->load->view('admin/product/edit_product', $data);
+    }
+
+    public function delete_product_image($id){
+        $image = Images::find($id);
+        if ($image->master == 1){
+            flash('warning', 'ban', 'kapak fotoğrafı silinemez.');
+            back();
+        }
+        unlink($image->path);
+        Images::delete($id);
+        flash('success', 'check', 'resim silindi.');
+        back();
+    }
+
+    public function product_image_cover($id){
+
+        $image = Images::find($id);
+        Images::update(['product' => $image->product], ['master' => 0]);
+        $data = array('master' => 1);
+        Images::update($id, $data);
+        flash('success', 'check', 'resim kapağı seçildi.');
+        back();
     }
 }
