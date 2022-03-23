@@ -492,6 +492,9 @@ class Admin extends CI_Controller {
                 Options::delete($id);
                 break;
             case "sub_option":
+                $sub_option = SubOptions::find($id);
+                Stocks::delete(['sub_option' => $sub_option->id]);
+                Stocks::delete(['sub_option2' => $sub_option->id]);
                 SubOptions::delete($id);
                 break;
         }
